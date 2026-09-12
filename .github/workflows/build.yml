@@ -9,11 +9,6 @@ name: build
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: "tag"
-        required: false
-        type: string
 
 jobs:
   build:
@@ -40,12 +35,13 @@ jobs:
 
     - name: Build Package
       run: |
+        echo "TAG=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
+
         ROOT_PATH="${{ github.workspace }}"
         MAKE_ARCH="arch-${{ matrix.target }}"
         docker run -v ${ROOT_PATH}/spksrc:/spksrc -w /spksrc/spk/terminal ghcr.io/synocommunity/spksrc make ${MAKE_ARCH}
 
     - name: Upload to Artifacts
-      if: inputs.tag == ''
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.target }}
@@ -54,8 +50,8 @@ jobs:
         retention-days: 5
 
     - name: Release
-      if: inputs.tag != ''
+      if: env.TAG != ''
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ inputs.tag }}
+        tag_name: ${{ env.TAG }}
         files: spksrc/packages/*.spk
