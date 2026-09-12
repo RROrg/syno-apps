@@ -1,6 +1,6 @@
 {
     "terminal.js": {
-        "SynoCommunity.Terminal.AppInstance": {
+        "RROrg.Terminal.AppInstance": {
             "type": "app",
             "title": "app:app_name",
             "version": "0.1",
@@ -8,10 +8,10 @@
             "texts": "texts",
             "allowMultiInstance": false,
             "allUsers": false,
-            "appWindow": "SynoCommunity.Terminal.AppWindow",
-            "depend": ["SynoCommunity.Terminal.AppWindow"]
+            "appWindow": "RROrg.Terminal.AppWindow",
+            "depend": ["RROrg.Terminal.AppWindow"]
         },
-        "SynoCommunity.Terminal.AppWindow": {
+        "RROrg.Terminal.AppWindow": {
             "type": "lib",
             "title": "app:app_name",
             "icon": "images/terminal-{0}.png",
