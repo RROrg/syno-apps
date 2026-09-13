@@ -9,6 +9,15 @@ name: build
 
 on:
   workflow_dispatch:
+    inputs:
+      spksrc:
+        description: "branch"
+        required: false
+        type: string
+      version:
+        description: "version"
+        required: false
+        type: string
 
 jobs:
   build:
@@ -18,40 +27,59 @@ jobs:
         target: [x64-7.0, aarch64-7.0]
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
+      - name: Checkout
+        uses: actions/checkout@main
+  
+      - name: Init Env
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          sudo timedatectl set-timezone "Asia/Shanghai"
 
-    - name: Init Env
-      run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "github-actions[bot]"
-        sudo timedatectl set-timezone "Asia/Shanghai"
+      - name: Calculate version
+        id: version
+        run: |
+          version=""
+          if [ ${{ github.ref_type }} == 'tag' ]; then
+            version="${{ github.ref_name }}"
+          elif [ -n "${{ inputs.version }}" ]; then
+            version="${{ inputs.version }}"
+          else
+            version="$(date +"%Y.%m.%d-%H%M")"
+          fi
 
-    - name: Checkout SynoCommunity Source and Docker Image
-      run: |
-        docker pull ghcr.io/synocommunity/spksrc
-        git clone --depth=1 https://github.com/SynoCommunity/spksrc.git
-        cp -rf src/* spksrc
+          echo "VERSION: ${version}"
+          echo "VERSION=${version}" >> $GITHUB_OUTPUT
 
-    - name: Build Package
-      run: |
-        echo "TAG=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
+      - name: Checkout SynoCommunity Source and Docker Image
+        run: |
+          docker pull ghcr.io/synocommunity/spksrc
+          git clone --depth=1 https://github.com/SynoCommunity/spksrc.git
 
-        ROOT_PATH="${{ github.workspace }}"
-        MAKE_ARCH="arch-${{ matrix.target }}"
-        docker run -v ${ROOT_PATH}/spksrc:/spksrc -w /spksrc/spk/terminal ghcr.io/synocommunity/spksrc make ${MAKE_ARCH}
+          if [ -n "${{ inputs.spksrc }}" ]; then
+            cd spksrc
+            git fetch --depth=1 origin "${{ inputs.spksrc }}"
+            git checkout "${{ inputs.spksrc }}"
+            cd ..
+          fi
 
-    - name: Upload to Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.target }}
-        path: |
-          spksrc/packages/*.spk
-        retention-days: 5
-
-    - name: Release
-      if: env.TAG != ''
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: ${{ env.TAG }}
-        files: spksrc/packages/*.spk
+      - name: Build Package
+        run: |
+          ROOT_PATH="${{ github.workspace }}"
+          MAKE_ARCH="arch-${{ matrix.target }}"
+          cp -rf ${ROOT_PATH}/src/* ${ROOT_PATH}/spksrc/
+          docker run -v ${ROOT_PATH}/spksrc:/spksrc -w /spksrc/spk/terminal ghcr.io/synocommunity/spksrc make ${MAKE_ARCH}
+  
+      - name: Upload to Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.target }}
+          path: |
+            spksrc/packages/*.spk
+  
+      - name: Release
+        if: steps.version.outputs.version != ''
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          files: spksrc/packages/*.spk
