@@ -6,13 +6,45 @@
         "desc": "This package must be run as root, but Synology prohibits this for packages that have not been verified by them."
       },
       {
-        "desc": "Please continue the update until the package fails to start and shows 'Please try again later or contact the package developer' in the Package Center."
+        "desc": "Please continue the installation, then ssh into DSM or use the task scheduler (root) to execute the following commands:"
       },
       {
-        "desc": "Than you need to ssh into DSM and execute the command:<br/><code>sudo sed -i 's/package/root/g' /var/packages/terminal/conf/privilege</code>"
+        "desc": "<code>sudo sed -i 's/package/root/g' /var/packages/terminal/conf/privilege  # Change permissions to root</code>"
       },
       {
-        "desc": "Finally press <strong>Repair</strong> in the Package Center, or manually start the package in the ssh session with:<br/><code>sudo synopkg start terminal</code>"
+        "desc": "<code>sudo synopkg restart terminal # Restart the service</code>"
+      },
+      {
+        "type": "singleselect",
+        "desc": "Whether to integrate tmux",
+        "subitems": [
+          {
+            "key": "wizard_use_tmux",
+            "desc": "Integrate tmux, supports multiple sessions and persistence",
+            "defaultValue": true
+          },
+          {
+            "key": "wizard_no_tmux",
+            "desc": "Only ttyd, does not support multiple sessions and persistence",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "type": "singleselect",
+        "desc": "Enable login",
+        "subitems": [
+          {
+            "key": "wizard_login_root",
+            "desc": "Default login as root user",
+            "defaultValue": true
+          },
+          {
+            "key": "wizard_login_prompt",
+            "desc": "login (does not auto-login)",
+            "defaultValue": false
+          }
+        ]
       }
     ]
   }

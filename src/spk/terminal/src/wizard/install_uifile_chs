@@ -6,13 +6,45 @@
         "desc": "此软件包需要以 root 用户身份运行，但是 Synology 禁止为未经验证的软件包这样做。"
       },
       {
-        "desc": "请继续安装，直到软件包失败并在软件包中心显示 '请稍后重试或联系软件开发商'。"
+        "desc": "请继续完成安装，然后通过 ssh 进入 DSM 或者通过任务计划（root），执行以下命令:"
       },
       {
-        "desc": "然后您需要 ssh 进入 DSM 并执行以下命令：<br/><code>sudo sed 's/package/root/g' -i /var/packages/terminal/conf/privilege</code>"
+        "desc": "<code>sudo sed -i 's/package/root/g' /var/packages/terminal/conf/privilege  # 修改权限为 root</code>"
       },
       {
-        "desc": "最后，请在软件包中心点击 <strong>修复</strong>，或在 ssh 会话中手动启动软件包：<br/><code>sudo synopkg start terminal</code>"
+        "desc": "<code>sudo synopkg restart terminal # 重启服务</code>"
+      },
+      {
+        "type": "singleselect",
+        "desc": "是否集成 tmux",
+        "subitems": [
+          {
+            "key": "wizard_use_tmux",
+            "desc": "集成 tmux 支持多会话和持久化",
+            "defaultValue": true
+          },
+          {
+            "key": "wizard_no_tmux",
+            "desc": "仅 ttyd 不支持多会话和持久化",
+            "defaultValue": false
+          }
+        ]
+      },
+      {
+        "type": "singleselect",
+        "desc": "是否启用登录",
+        "subitems": [
+          {
+            "key": "wizard_login_root",
+            "desc": "默认登录 root 用户",
+            "defaultValue": true
+          },
+          {
+            "key": "wizard_login_prompt",
+            "desc": "login 不自动登录",
+            "defaultValue": false
+          }
+        ]
       }
     ]
   }
