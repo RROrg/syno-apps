@@ -1,0 +1,4 @@
+[app]
+app_name = "kodi"
+description = "Kodi media center running in Docker"
+index_title = "kodi"

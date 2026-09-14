@@ -1,0 +1,19 @@
+[
+  {
+    "step_title": "Important Installation Notes",
+    "items": [
+      {
+        "desc": "This package must be run as root, but Synology prohibits this for packages that have not been verified by them."
+      },
+      {
+        "desc": "Please continue the installation, then ssh into DSM or use the task scheduler (root) to execute the following commands:"
+      },
+      {
+        "desc": "<code>sudo sed -i 's/package/root/g' /var/packages/chromium-desktop/conf/privilege  # Change permissions to root</code>"
+      },
+      {
+        "desc": "<code>sudo synopkg restart chromium-desktop # Restart the service</code>"
+      }
+    ]
+  }
+]

@@ -68,7 +68,11 @@ jobs:
           ROOT_PATH="${{ github.workspace }}"
           MAKE_ARCH="arch-${{ matrix.target }}"
           cp -rf ${ROOT_PATH}/src/* ${ROOT_PATH}/spksrc/
-          docker run -v ${ROOT_PATH}/spksrc:/spksrc -w /spksrc/spk/terminal ghcr.io/synocommunity/spksrc make ${MAKE_ARCH}
+
+          for P in chromium-desktop kodi terminal; do
+            echo "Building package: ${P}"
+            docker run -v ${ROOT_PATH}/spksrc:/spksrc -w /spksrc/spk/${P} ghcr.io/synocommunity/spksrc make ${MAKE_ARCH} || exit 1
+          done
   
       - name: Upload to Artifacts
         uses: actions/upload-artifact@v7

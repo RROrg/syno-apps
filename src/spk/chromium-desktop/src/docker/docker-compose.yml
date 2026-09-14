@@ -1,0 +1,40 @@
+services:
+  chromium-desktop:
+    image: wjz304/chromium-desktop:latest
+    container_name: chromium-desktop
+    restart: unless-stopped
+    # privileged: true             # 启用特权模式（可选, 注意安全风险）
+    # tty: true                    # 分配伪终端
+    # stdin_open: true             # 允许交互式终端
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+      - USERNAME=chromium
+      - PASSWORD=chromium
+      - RESOLUTION=1920x1080x24
+      - VNC_PASSWORD=${wizard_vnc_password:-}
+      - NOVNC_BASE_PATH=/chromium-desktop
+      - NOVNC_SOCK=/sock/chromium-desktop.sock
+      - NOVNC_SOCK_MODE=0777
+      # - AUDIO_SINK=alsa_output.pci-0000_06_00.1.hdmi-stereo  # 设置默认音频输出设备（可选）
+      # - START_URL=https://www.google.com/  # 设置 Chromium 启动后打开的默认页面（可选）
+      # - LIBGL_ALWAYS_SOFTWARE=1            # 无 GPU 驱动时强制软件渲染（可选）
+      # - MESA_LOADER_DRIVER_OVERRIDE=swrast # 强制软件渲染（可选）
+      # - XDG_RUNTIME_DIR=/run/user/1000     # PulseAudio/PipeWire 支持（可选）
+    devices:
+      - /dev/dri:/dev/dri          # 显卡直通 （必须）
+      - /dev/snd:/dev/snd          # 声卡直通
+      - /dev/input:/dev/input      # 输入设备直通（键盘、鼠标、遥控器等）
+    volumes:
+      - /run/udev:/run/udev:ro     # 使容器能读取设备信息（设备热插拔、输入设备、GPU/DRM 等元数据）
+      - /var/packages/chromium-desktop/var:/sock
+      - /var/packages/chromium-desktop/var/home:/home     # 持久化用户文件（推荐）
+      # - /run/user/1000/pulse/native:/run/user/1000/pulse/native # PulseAudio 支持，需额外配置（可选）
+      # - /run/user/1000/pipewire-0:/run/user/1000/pipewire-0     # PipeWire 支持，需额外配置（可选）
+    cap_add:
+      - SYS_ADMIN                  # 允许使用 ioctl 等操作 DRM 设备
+      - SYS_RAWIO                  # 允许直接访问硬件设备
+    # network_mode: host           # 使用宿主网络模式（可选，UPnP/DLNA 及 AirPlay 需要）
+    shm_size: "1gb"
+    security_opt:
+      - seccomp=unconfined

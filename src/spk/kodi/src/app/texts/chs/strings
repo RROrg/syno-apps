@@ -1,0 +1,4 @@
+[app]
+app_name = "kodi"
+description = "基于 Docker 的 Kodi 媒体中心"
+index_title = "kodi"

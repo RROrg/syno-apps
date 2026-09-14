@@ -1,0 +1,23 @@
+{
+  "chromium-desktop.js": {
+    "RROrg.ChromiumDesktop.AppInstance": {
+      "type": "app",
+      "title": "app:app_name",
+      "version": "0.1",
+      "icon": "images/chromium-desktop-{0}.png",
+      "texts": "texts",
+      "allowMultiInstance": false,
+      "allUsers": false,
+      "appWindow": "RROrg.ChromiumDesktop.AppWindow",
+      "depend": [
+        "RROrg.ChromiumDesktop.AppWindow"
+      ]
+    },
+    "RROrg.ChromiumDesktop.AppWindow": {
+      "type": "lib",
+      "title": "app:app_name",
+      "icon": "images/chromium-desktop-{0}.png",
+      "texts": "texts"
+    }
+  }
+}

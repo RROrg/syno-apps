@@ -1,0 +1,23 @@
+{
+  "kodi.js": {
+    "RROrg.Kodi.AppInstance": {
+      "type": "app",
+      "title": "app:app_name",
+      "version": "0.1",
+      "icon": "images/kodi-{0}.png",
+      "texts": "texts",
+      "allowMultiInstance": false,
+      "allUsers": false,
+      "appWindow": "RROrg.Kodi.AppWindow",
+      "depend": [
+        "RROrg.Kodi.AppWindow"
+      ]
+    },
+    "RROrg.Kodi.AppWindow": {
+      "type": "lib",
+      "title": "app:app_name",
+      "icon": "images/kodi-{0}.png",
+      "texts": "texts"
+    }
+  }
+}
