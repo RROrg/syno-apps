@@ -1,0 +1,4 @@
+[app]
+app_name = "chromium desktop"
+description = "基于 Docker 的 Chromium 桌面浏览器"
+index_title = "Chromium Desktop"

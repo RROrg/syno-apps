@@ -1,0 +1,15 @@
+{
+  ".url": {
+    "RROrg.kodi": {
+      "type": "url",
+      "title": "Kodi",
+      "desc": "Kodi media center",
+      "icon": "images/kodi-{0}.png",
+      "protocol": "http",
+      "port": "8080",
+      "url": "/",
+      "allUsers": true,
+      "grantPrivilege": "local"
+    }
+  }
+}
