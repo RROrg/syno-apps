@@ -1,21 +1,23 @@
 {
-    "terminal.js": {
-        "RROrg.Terminal.AppInstance": {
-            "type": "app",
-            "title": "app:app_name",
-            "version": "0.1",
-            "icon": "images/terminal-{0}.png",
-            "texts": "texts",
-            "allowMultiInstance": false,
-            "allUsers": false,
-            "appWindow": "RROrg.Terminal.AppWindow",
-            "depend": ["RROrg.Terminal.AppWindow"]
-        },
-        "RROrg.Terminal.AppWindow": {
-            "type": "lib",
-            "title": "app:app_name",
-            "icon": "images/terminal-{0}.png",
-            "texts": "texts"
-        }
+  "terminal.js": {
+    "RROrg.Terminal.AppInstance": {
+      "type": "app",
+      "title": "app:app_name",
+      "version": "0.1",
+      "icon": "images/terminal-{0}.png",
+      "texts": "texts",
+      "allowMultiInstance": false,
+      "allUsers": false,
+      "appWindow": "RROrg.Terminal.AppWindow",
+      "depend": [
+        "RROrg.Terminal.AppWindow"
+      ]
+    },
+    "RROrg.Terminal.AppWindow": {
+      "type": "lib",
+      "title": "app:app_name",
+      "icon": "images/terminal-{0}.png",
+      "texts": "texts"
     }
+  }
 }

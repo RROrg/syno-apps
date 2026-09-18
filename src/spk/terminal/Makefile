@@ -1,6 +1,6 @@
 SPK_NAME = terminal
-SPK_VERS = 3.0
-SPK_REV = 5
+SPK_VERS = 4.0
+SPK_REV = 2
 SPK_ICON = src/$(SPK_NAME).png
 
 DEPENDS = cross/tmux cross/ttyd
@@ -38,8 +38,6 @@ terminal_strip_target:
 
 	install -m 755 -d $(STAGING_DIR)/etc/
 	install -m 644 src/etc/alias.terminal.conf $(STAGING_DIR)/etc/alias.terminal.conf
-	install -m 644 src/etc/terminal_tmux.conf $(STAGING_DIR)/etc/terminal_tmux.conf
-	install -m 644 src/etc/terminal_ttyd.conf $(STAGING_DIR)/etc/terminal_ttyd.conf
 
 	install -m 755 -d $(STAGING_DIR)/app/help
 	for language in chs enu; do \
