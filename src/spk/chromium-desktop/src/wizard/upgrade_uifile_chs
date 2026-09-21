@@ -1,0 +1,33 @@
+[
+  {
+    "step_title": "升级须知",
+    "items": [
+      {
+        "desc": "此软件包需要以 root 用户身份运行，但是 Synology 禁止为未经验证的软件包这样做。"
+      },
+      {
+        "desc": "请继续完成安装，然后通过 ssh 进入 DSM 或者通过任务计划（root），执行以下命令:"
+      },
+      {
+        "desc": "<code>sudo sed -i 's/package/root/g' /var/packages/chromium-desktop/conf/privilege  # 修改权限为 root</code>"
+      },
+      {
+        "desc": "<code>sudo synopkg restart chromium-desktop # 重启服务</code>"
+      },
+      {
+        "type": "textfield",
+        "desc": "通过 VNC(noVNC) 访问 Chromium 桌面所使用的密码。",
+        "subitems": [
+          {
+            "key": "wizard_vnc_password",
+            "desc": "noVNC 访问密码",
+            "defaultValue": "chromium",
+            "validator": {
+              "allowBlank": false
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

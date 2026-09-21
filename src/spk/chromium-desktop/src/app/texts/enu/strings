@@ -1,0 +1,4 @@
+[app]
+app_name = "chromium desktop"
+description = "Chromium desktop browser running in Docker"
+index_title = "Chromium Desktop"

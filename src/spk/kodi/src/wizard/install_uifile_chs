@@ -1,0 +1,35 @@
+[
+  {
+    "step_title": "安装注意事项",
+    "items": [
+      {
+        "desc": "此软件包需要以 root 用户身份运行，但是 Synology 禁止为未经验证的软件包这样做。"
+      },
+      {
+        "desc": "请继续完成安装，然后通过 ssh 进入 DSM 或者通过任务计划（root），执行以下命令:"
+      },
+      {
+        "desc": "<code>sudo sed -i 's/package/root/g' /var/packages/kodi/conf/privilege  # 修改权限为 root</code>"
+      },
+      {
+        "desc": "<code>sudo synopkg restart kodi # 重启服务</code>"
+      },
+      {
+        "type": "singleselect",
+        "desc": "网络模式",
+        "subitems": [
+          {
+            "key": "wizard_network_host",
+            "desc": "host：支持 UPnP/DLNA 和 AirPlay 局域网串流",
+            "defaultValue": false
+          },
+          {
+            "key": "wizard_network_bridge",
+            "desc": "bridge（默认）：隔离网络，使用端口映射",
+            "defaultValue": true
+          }
+        ]
+      }
+    ]
+  }
+]
